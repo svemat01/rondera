@@ -1,0 +1,47 @@
+# DEV Environment
+version: "2"
+services:
+    # --- Services ---
+    app:
+        image: "node:lts-slim"
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: "npm run dev -- --host 0.0.0.0"
+        tty: true
+        depends_on:
+            redis:
+                condition: service_started
+            scylla:
+                condition: service_started
+        ports:
+            - "5173:5173"
+        environment:
+            - REDIS_URL=redis://redis:6379
+            - SCYLLO_DB_HOST=scylla:9042
+            - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
+            - API_URL=0.0.0.0
+            - MASTER_PIN=1234
+
+    # --- Database ---
+    redis:
+        image: "bitnami/redis:7.0"
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        volumes:
+            - ./tools/redis-persistence:/bitnami/redis/data
+        ports:
+            - "6379:6379"
+
+    scylla:
+        image: "scylladb/scylla:5.0.5"
+        command: "--smp 1 --skip-wait-for-gossip-to-settle 0"
+        ports:
+            - "9042:9042"
+        volumes:
+            - "./tools/scylla:/var/lib/scylla"
+        logging:
+            driver: none
+networks:
+    default:
+        driver: bridge
