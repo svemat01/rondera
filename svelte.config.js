@@ -14,6 +14,12 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$db: './src/database'
+		},
+		files: {
+			hooks: {
+				client: 'src/hooks/client',
+				server: 'src/hooks/server'
+			}
 		}
 	},
 };
