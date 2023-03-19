@@ -1,15 +1,11 @@
 /* eslint-disable no-redeclare */
 type Result<T> = [T, undefined] | [undefined, Error];
 
-export async function tryCatchMe<T>(
-    asyncFunction: () => Promise<T>
-): Promise<Result<T>>;
+export async function tryCatchMe<T>(asyncFunction: () => Promise<T>): Promise<Result<T>>;
 
 export function tryCatchMe<T>(syncFunction: () => T): Result<T>;
 
-export function tryCatchMe<T>(
-    function_: () => T | Promise<T>
-): Result<T> | Promise<Result<T>> {
+export function tryCatchMe<T>(function_: () => T | Promise<T>): Result<T> | Promise<Result<T>> {
     try {
         const result = function_();
 

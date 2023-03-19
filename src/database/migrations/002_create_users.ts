@@ -13,7 +13,7 @@ export const m002_create_users: Migration<{
             password: { type: 'text' },
             permissions: { type: 'bigint' },
         },
-        'id'
+        'id',
     );
 
     await database.createIndex('users', 'users_by_username', 'username');

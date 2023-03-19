@@ -12,7 +12,7 @@ export const m003_create_keys: Migration<{
             kid: { type: 'bigint' },
             uid: { type: 'bigint' },
         },
-        'kid'
+        'kid',
     );
 
     await database.createIndex('keys', 'keys_by_uid', 'uid');

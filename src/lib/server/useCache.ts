@@ -3,8 +3,8 @@ export type Setter<K> = (key: string, value: K) => void;
 export type Resolver<K> = (key: string) => Promise<K | undefined> | K | undefined;
 
 export type ResolverSetter<K> = {
-	resolver: Resolver<K>;
-	setter: Setter<K> | undefined;
+    resolver: Resolver<K>;
+    setter: Setter<K> | undefined;
 };
 
 /**
@@ -17,27 +17,27 @@ export type ResolverSetter<K> = {
  * @returns The value returned by the resolvers or undefined.
  */
 export const useCache = async <K>(
-	key: string,
-	...functions: (ResolverSetter<K> | Resolver<K>)[]
+    key: string,
+    ...functions: (ResolverSetter<K> | Resolver<K>)[]
 ): Promise<K | undefined> => {
-	let data;
-	const setters: Setter<K>[] = [];
+    let data;
+    const setters: Setter<K>[] = [];
 
-	for (const ResolverData of functions) {
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		const { resolver, setter = () => {} } =
-			typeof ResolverData == 'function' ? { resolver: ResolverData } : ResolverData;
+    for (const ResolverData of functions) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        const { resolver, setter = () => {} } =
+            typeof ResolverData == 'function' ? { resolver: ResolverData } : ResolverData;
 
-		data = await resolver(key);
+        data = await resolver(key);
 
-		if (data !== undefined) {
-			for (const set of setters) set(key, data);
+        if (data !== undefined) {
+            for (const set of setters) set(key, data);
 
-			break;
-		}
+            break;
+        }
 
-		if (setter) setters.push(setter);
-	}
+        if (setter) setters.push(setter);
+    }
 
-	return data;
+    return data;
 };

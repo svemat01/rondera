@@ -16,7 +16,7 @@ export const m001_create_subcentrals: Migration<{
             name: { type: 'text' },
             description: { type: 'text' },
         },
-        'id'
+        'id',
     );
 
     const centralID = 80_795_984_841_412_608n;

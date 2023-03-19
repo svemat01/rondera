@@ -1,12 +1,12 @@
 import { errors } from 'cassandra-driver';
 import { ScylloClient } from 'scyllo';
 
+import { environment } from '$lib/server/environment.js';
+
+import { runMigrations } from './migrations.js';
 import type { Key } from './types/key.js';
 import type { SubCentral } from './types/subcentral.js';
 import type { User } from './types/user.js';
-
-import { environment } from '$lib/server/environment.js';
-import { runMigrations } from './migrations.js';
 
 export const KEYSPACE = 'tracka';
 
@@ -37,9 +37,7 @@ export const setupDB = async () => {
             break;
         } catch (error) {
             if (error instanceof errors.NoHostAvailableError) {
-                console.error(
-                    'Could not connect to DB, retrying in 5 seconds...'
-                );
+                console.error('Could not connect to DB, retrying in 5 seconds...');
                 retries -= 1;
                 await new Promise((resolve) => setTimeout(resolve, 5000));
             } else {
