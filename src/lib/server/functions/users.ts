@@ -10,11 +10,13 @@ export const createUser = async (username: string, password: string, permissions
     const passwordHash = await hash(password, 10);
 
     const uid = SnowflakeGen();
+    const kid = SnowflakeGen();
 
     const perms = grantPermission(0n, ...permissions)
 
     await DB.insertInto('users', {
         uid,
+        kid,
         username,
         password: passwordHash,
         permissions: perms,

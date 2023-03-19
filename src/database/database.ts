@@ -4,7 +4,6 @@ import { ScylloClient } from 'scyllo';
 import { environment } from '$lib/server/environment.js';
 
 import { runMigrations } from './migrations.js';
-import type { Key } from './types/key.js';
 import type { SubCentral } from './types/subcentral.js';
 import type { User } from './types/user.js';
 
@@ -13,7 +12,6 @@ export const KEYSPACE = 'tracka';
 export const DB = new ScylloClient<{
     subcentrals: SubCentral;
     users: User;
-    keys: Key;
 }>({
     client: {
         keyspace: 'system',

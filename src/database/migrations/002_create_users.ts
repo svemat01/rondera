@@ -1,6 +1,7 @@
-import { Migration } from 'scyllo';
+import type { Migration } from 'scyllo';
 
-import { UserV1 } from '../types/user.js';
+import type { UserV1 } from '../types/user.js';
+
 export const m002_create_users: Migration<{
     users: UserV1;
 }> = async (database) => {
@@ -9,6 +10,7 @@ export const m002_create_users: Migration<{
         true,
         {
             uid: { type: 'bigint' },
+            kid: { type: 'bigint' },
             username: { type: 'text' },
             password: { type: 'text' },
             permissions: { type: 'bigint' },

@@ -2,27 +2,59 @@ import jsonwebtoken from 'jsonwebtoken';
 import { z } from 'zod';
 
 import { DB } from '$db/database.js';
+import type { User } from '$db/types/user.js';
+import { CoercedBigInt } from '$lib/schemes.js';
 
+import { useLocalCache } from '../cache/localCache.js';
+import { useRedisCache } from '../cache/redisCache.js';
 import { environment } from '../environment.js';
-import { SnowflakeGen } from '../sunflake.js';
+import { tryCatchMe } from '../trycatchme.js';
+import { useCache } from '../useCache.js';
 
 export const authKeyJWTSchema = z.object({
-    id: z.coerce.bigint(),
+    uid: CoercedBigInt,
+    kid: CoercedBigInt,
 });
 
-export const createKey = async (uid: bigint) => {
-    const kid = SnowflakeGen();
+type AuthKeyData = z.infer<typeof authKeyJWTSchema>;
 
-    await DB.insertInto('keys', {
-        kid,
+export const createKey = async (uid: string, kid: string) => {
+    const keyData: Record<keyof AuthKeyData, string | number> = {
         uid,
-    });
+        kid,
+    };
 
-    const keyData = {
-        id: kid.toString(),
-    }
-
-    const key = jsonwebtoken.sign(keyData, environment.JWT_PRIVATE_KEY)
+    const key = jsonwebtoken.sign(keyData, environment.JWT_PRIVATE_KEY);
 
     return key;
-}
+};
+
+export const resolveKey = async (authToken: string) => {
+    const [jwt, jwtError] = tryCatchMe(() =>
+        jsonwebtoken.verify(authToken, environment.JWT_PRIVATE_KEY, {}),
+    );
+
+    if (jwtError) {
+        return;
+    }
+
+    const jwtParsed = authKeyJWTSchema.safeParse(jwt);
+
+    if (!jwtParsed.success) {
+        return;
+    }
+
+    const user = await useCache<User>(
+        `user:${jwtParsed.data.uid}`,
+        useLocalCache(),
+        useRedisCache(),
+        async () => {
+            return await DB.selectOneFrom('users', '*', {
+                uid: jwtParsed.data.uid,
+                kid: jwtParsed.data.kid,
+            });
+        },
+    );
+
+    return user;
+};

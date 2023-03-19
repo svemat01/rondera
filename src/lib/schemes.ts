@@ -9,4 +9,18 @@ export const Password = z.string().min(8, 'Password must be at least 8 character
 // - No spaces
 // export const Username = z.string().min(3, 'Username must be at least 3 characters long').refine((value) => !value.includes(' '), 'Username cannot contain spaces');
 // use regex instead of refine
-export const Username = z.string().min(3, 'Username must be at least 3 characters long').regex(/^[^\s]+$/, 'Username cannot contain spaces');
+export const Username = z
+    .string()
+    .min(3, 'Username must be at least 3 characters long')
+    .regex(/^[^\s]+$/, 'Username cannot contain spaces');
+
+export const CoercedBigInt = z
+    .any()
+    .transform((value) => {
+        try {
+            return BigInt(value);
+        } catch (error) {
+            return value;
+        }
+    })
+    .pipe(z.bigint());
