@@ -9,9 +9,13 @@ export const redisCache = createClient({
 });
 
 export const setupRedis = async () => {
-    console.log('Connecting to Redis...');
-    await redisCache.connect();
-    console.log('Connected to Redis');
+    if (redisCache.isOpen) {
+        console.log('Redis already connected');
+    } else {
+        console.log('Connecting to Redis...');
+        await redisCache.connect();
+        console.log('Connected to Redis');
+    }
 };
 
 export const useRedisCache: <K>() => ResolverSetter<K> = (expiry = 600) => ({
