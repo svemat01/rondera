@@ -1,18 +1,15 @@
 import type { Handle } from '@sveltejs/kit';
 import jsonwebtoken from 'jsonwebtoken';
-import { z } from 'zod';
 
 import { DB } from '$db/database.js';
 import type { Key } from '$db/types/key.js';
+import type { User } from '$db/types/user.js';
 import { useLocalCache } from '$lib/server/cache/localCache.js';
 import { useRedisCache } from '$lib/server/cache/redisCache.js';
 import { environment } from '$lib/server/environment.js';
+import { authKeyJWTSchema } from '$lib/server/functions/keys.js';
 import { tryCatchMe } from '$lib/server/trycatchme.js';
 import { useCache } from '$lib/server/useCache.js';
-
-const jwtSchema = z.object({
-    id: z.coerce.bigint(),
-});
 
 export const resolveKey = async (authToken: string) => {
     const [jwt, jwtError] = tryCatchMe(() =>
@@ -23,7 +20,7 @@ export const resolveKey = async (authToken: string) => {
         return;
     }
 
-    const jwtParsed = jwtSchema.safeParse(jwt);
+    const jwtParsed = authKeyJWTSchema.safeParse(jwt);
 
     if (!jwtParsed.success) {
         return;
@@ -52,8 +49,6 @@ export const checkUser = (async ({ event, resolve }) => {
 
     const auth = cookies.get('auth');
 
-    event.locals.user = 'yeet';
-
     if (!auth) {
         console.log('No auth cookie found');
         return await resolve(event);
@@ -69,6 +64,26 @@ export const checkUser = (async ({ event, resolve }) => {
     }
 
     console.log('Key found', key);
+
+    const user = await useCache<User>(
+        `user:${key.uid}`,
+        useLocalCache(),
+        useRedisCache(),
+        async () => {
+            return await DB.selectOneFrom('users', '*', {
+                uid: key.uid,
+            });
+        }
+    )
+
+    if (!user) {
+        console.log('No user found');
+        cookies.delete('auth');
+
+        return await resolve(event);
+    }
+
+    event.locals.user = user;
 
     const response = await resolve(event);
     return response;

@@ -8,5 +8,8 @@
         "**/Thumbs.db": true,
         "**/node_modules": true
     },
-    "cSpell.words": ["trycatchme"]
+    "cSpell.words": [
+        "Tracka",
+        "trycatchme"
+    ]
 }
