@@ -32,6 +32,12 @@ export const load = (async (event) => {
 
 export const actions = {
     default: async (event) => {
+        const setup = await setupCheck();
+    
+        if (setup) {
+            throw error(400, 'Setup already completed');
+        }
+        
         // Same syntax as in the load function
         const form = await superValidate(event, schema);
 
