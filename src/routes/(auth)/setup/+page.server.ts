@@ -7,6 +7,7 @@ import { createKey } from '$lib/server/functions/keys.js';
 import { createUser } from '$lib/server/functions/users.js';
 import { Permissions } from '$lib/server/permissions.js';
 
+import { setupCheck } from '../setupCheck.js';
 import type { Actions, PageServerLoad } from './$types';
 
 const schema = z.object({
@@ -16,7 +17,7 @@ const schema = z.object({
 });
 
 export const load = (async (event) => {
-    const { setup } = await event.parent();
+    const setup = await setupCheck();
 
     if (setup) {
         throw error(400, 'Setup already completed');
