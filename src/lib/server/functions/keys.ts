@@ -60,12 +60,12 @@ export const resolveKey = async (authToken: string) => {
     return user;
 };
 
-export const resetKeyCache = async (uid: string) => {
+export const resetKeyCache = async (uid: bigint) => {
     deleteLocalValue(`user:${uid}`);
     await deleteRedisValue(`user:${uid}`);
 };
 
-export const resetKey = async (uid: string) => {
+export const resetKey = async (uid: bigint) => {
     const kid = SnowflakeGen();
 
     await DB.update(
