@@ -22,3 +22,7 @@ export const useLocalCache: <K>() => ResolverSetter<K> = () => ({
         localCache.set(key, superjson.stringify(value));
     },
 });
+
+export const deleteLocalValue = (key: string) => {
+    localCache.del(key);
+}

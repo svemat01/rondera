@@ -33,3 +33,9 @@ export const useRedisCache: <K>() => ResolverSetter<K> = (expiry = 600) => ({
             redisCache.set(key, superjson.stringify(value), { EX: expiry });
     },
 });
+
+export const deleteRedisValue = async (key: string) => {
+    if (redisCache && redisCache.isOpen) {
+        await redisCache.del(key);
+    }
+}

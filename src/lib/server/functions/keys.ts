@@ -5,9 +5,10 @@ import { DB } from '$db/database.js';
 import type { User } from '$db/types/user.js';
 import { CoercedBigInt } from '$lib/schemes.js';
 
-import { useLocalCache } from '../cache/localCache.js';
-import { useRedisCache } from '../cache/redisCache.js';
+import { deleteLocalValue, useLocalCache } from '../cache/localCache.js';
+import { deleteRedisValue, useRedisCache } from '../cache/redisCache.js';
 import { environment } from '../environment.js';
+import { SnowflakeGen } from '../sunflake.js';
 import { tryCatchMe } from '../trycatchme.js';
 import { useCache } from '../useCache.js';
 
@@ -57,4 +58,25 @@ export const resolveKey = async (authToken: string) => {
     );
 
     return user;
+};
+
+export const resetKeyCache = async (uid: string) => {
+    deleteLocalValue(`user:${uid}`);
+    await deleteRedisValue(`user:${uid}`);
+};
+
+export const resetKey = async (uid: string) => {
+    const kid = SnowflakeGen();
+
+    await DB.update(
+        'users',
+        {
+            kid,
+        },
+        {
+            uid,
+        },
+    );
+
+    await resetKeyCache(uid);
 };
