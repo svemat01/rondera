@@ -16,7 +16,7 @@ const schema = z.object({
 });
 
 export const load = (async (event) => {
-    const { setup } = await event.parent()
+    const { setup } = await event.parent();
 
     if (setup) {
         throw error(400, 'Setup already completed');
@@ -47,9 +47,11 @@ export const actions = {
             return fail(400, { form });
         }
 
-        const uid = await createUser(form.data.username, form.data.password, [Permissions.FULL]);
+        const { uid, kid } = await createUser(form.data.username, form.data.password, [
+            Permissions.FULL,
+        ]);
 
-        const key = await createKey(uid);
+        const key = await createKey(uid, kid);
 
         event.cookies.set('auth', key, {
             path: '/',

@@ -19,4 +19,5 @@ export const m002_create_users: Migration<{
     );
 
     await database.createIndex('users', 'users_by_username', 'username');
+    await database.createIndex('users', 'users_by_kid', 'kid');
 };

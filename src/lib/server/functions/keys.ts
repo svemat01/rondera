@@ -18,8 +18,8 @@ export const authKeyJWTSchema = z.object({
 
 type AuthKeyData = z.infer<typeof authKeyJWTSchema>;
 
-export const createKey = async (uid: string, kid: string) => {
-    const keyData: Record<keyof AuthKeyData, string | number> = {
+export const createKey = async (uid: bigint, kid: bigint) => {
+    const keyData: AuthKeyData = {
         uid,
         kid,
     };
