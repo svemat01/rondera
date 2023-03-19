@@ -1,5 +1,5 @@
 export type UserV1 = {
-    id: bigint;
+    uid: bigint;
     username: string;
     password: string;
     permissions: bigint;
