@@ -7,5 +7,5 @@ export const setupCheck = async () => {
         return !!(await DB.selectOneFrom('users', ['uid'], {}));
     });
 
-    return !!setup;
+    return !setup;
 };
