@@ -1,4 +1,4 @@
-import { setupCheck } from './(auth)/setupCheck.js';
+import { setupCheck } from '../(auth)/setupCheck.js';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
