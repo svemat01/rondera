@@ -43,8 +43,8 @@
 
 <div class="setup">
     <div class="header">
-        <h1>Konfiguera</h1>
-        <span>Rondera har inte konfiguerats, börja med att skapa ett adminstratör konto.</span>
+        <h1>Konfigurera</h1>
+        <span>Rondera har inte konfigurerats, börja med att skapa ett administratör konto.</span>
     </div>
 
     <form method="POST" use:enhance>

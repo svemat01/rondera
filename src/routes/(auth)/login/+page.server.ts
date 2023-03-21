@@ -1,16 +1,14 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
+import { compare } from 'bcrypt';
 import { setError, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
+import { DB } from '$db/database.js';
 import { Password, Username } from '$lib/schemes.js';
 import { createKey } from '$lib/server/functions/keys.js';
-import { createUser } from '$lib/server/functions/users.js';
-import { Permissions } from '$lib/server/permissions.js';
 
 import { setupCheck } from '../setupCheck.js';
 import type { Actions, PageServerLoad } from './$types';
-import { DB } from '$db/database.js';
-import { compare } from 'bcrypt';
 
 const schema = z.object({
     username: Username,
