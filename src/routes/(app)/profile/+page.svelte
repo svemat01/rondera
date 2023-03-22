@@ -78,7 +78,7 @@
     .logout {
         text-decoration: none;
         color: white;
-        background-color: #43ADEB;
+        background-color: $blue-600;
 
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
@@ -91,7 +91,7 @@
         transition: all 0.2s ease;
 
         &:hover {
-            background-color: #3C9BD8;
+            background-color: $blue-700;
         }
         
     }

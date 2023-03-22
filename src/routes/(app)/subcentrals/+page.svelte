@@ -95,8 +95,8 @@
     /* Make the header */
     thead {
         tr {
-            background-color: #2B32B2;
-            color: #ffffff;
+            background-color: $blue-600;
+            color: $stone-50;
             text-align: left;
             font-weight: bold;
         }
@@ -105,10 +105,13 @@
     /* Make the body */
     tbody {
         tr {
-            border-bottom: 1px solid #dddddd;
+            border-bottom: 1px solid $stone-200;
+            background-color: $stone-100;
+
+            transition: background-color 0.1s ease-in-out; 
 
             &:hover {
-                background-color: #f3f3f3;
+                background-color: $stone-150;
             }
         }
     }
@@ -119,7 +122,7 @@
         margin-top: 1rem;
         border-radius: 0.3rem;
 
-        background-color: #2B32B2;
+        background-color: $blue-600;
         color: #ffffff;
         text-decoration: none;
         font-size: 1.1rem;
@@ -128,7 +131,7 @@
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-            background-color: #1a1e7a;
+            background-color: $blue-700;
         }
     }
 </style>

@@ -35,11 +35,11 @@
             text-overflow: ellipsis;
             white-space: nowrap;
 
-            color: #2B32B2;
-            transition: color 0.2s ease-in-out;
+            color: $blue-600;
+            transition: all 0.2s ease-in-out;
 
             &:hover {
-                color: #1E213A;
+                color: $blue-700;
             }
 
         }

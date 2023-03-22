@@ -10,37 +10,6 @@
     const { user } = data;
 </script>
 
-<!-- <div class="vertical">
-    <Topbar {user} />
-    <div class="horizontal">
-        <Sidebar {user} />
-        <main>
-            <slot />
-        </main>
-    </div>
-</div>
-
-<style lang="scss">
-    .vertical {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    .horizontal {
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-    }
-
-    main {
-        flex: 1;
-        padding: 1rem;
-
-        background-color: #f5f5f5;
-    }
-</style> -->
-
 <div class="wrapper">
     <div class="branding">
         <img src={icon} alt="Logo" />
@@ -60,7 +29,7 @@
         grid-template-rows: 70px auto;
         min-height: 100vh;
 
-        background-color: #f2f2f2;
+        background-color: $stone-50;
     }
 
     .branding {
@@ -84,7 +53,7 @@
     main {
         padding: 1rem;
 
-        background-color: #ededed;
+        background-color: $stone-100;
 
         /* Inset shadow */
         box-shadow: inset 0 0 8px 0 rgba(0, 0, 0, 0.2);

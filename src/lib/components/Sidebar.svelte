@@ -67,7 +67,7 @@
                 transition: color 0.2s ease-in-out;
 
                 &.active {
-                    color: #2B32B2;
+                    color: $blue-600;
                 }
             }
         }
