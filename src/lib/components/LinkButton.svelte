@@ -1,6 +1,7 @@
 <script lang="ts">
     export let href: string;
-    export let style: 'primary';
+    export let style: 'primary' | 'secondary' | 'danger' = 'primary';
+    export let disabled = false;
 </script>
 
 <!-- 
@@ -25,13 +26,13 @@
     ```
  -->
 
-<a {href} class="link-button {style}" {...$$restProps}>
+<a {href} class="link-button {style}" class:disabled {...$$restProps} on:click={disabled ? (e) => e.preventDefault() : undefined}>
     <slot />
 </a>
 
 <style lang="scss">
     .link-button {
-        display: inline-block;
+        display: block;
 
         padding: var(--padding, 0.75rem 1rem);
         border-radius: 0.3rem;
@@ -44,6 +45,12 @@
         font-weight: 500;
 
         cursor: pointer;
+
+        &.disabled {
+            /* Disabled should keep color hue but lower saturation */
+            filter: saturate(0.3);
+            cursor: not-allowed;
+        }
     }
 
     .primary {
@@ -54,6 +61,29 @@
 
         &:hover {
             background-color: $blue-700;
+        }
+    }
+
+    .secondary {
+        color: $blue-600;
+        background-color: $stone-50;
+        border: 3px solid $blue-600;
+
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: $gray-700;
+        }
+    }
+
+    .danger {
+        color: $stone-50;
+        background-color: $red-600;
+
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: $red-700;
         }
     }
 </style>
