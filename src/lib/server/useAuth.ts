@@ -1,11 +1,11 @@
 import { error, redirect } from '@sveltejs/kit';
 import { hasPermission } from 'permissio';
 
-import type { User } from '$db/types/user.js';
+import type { SecureUser } from '$db/types/user.js';
 
-import type { Permissions } from './permissions.js';
+import type { Permission } from '../utils/permissions.js';
 
-export const useAuth = (user: User | undefined, requiredPermissions: Permissions[] = []) => {
+export const useAuth = (user: SecureUser | undefined, requiredPermissions: Permission[] = []) => {
     if (!user) {
         throw redirect(307, '/login');
     }

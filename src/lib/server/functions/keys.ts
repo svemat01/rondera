@@ -2,7 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import { z } from 'zod';
 
 import { DB } from '$db/database.js';
-import type { User } from '$db/types/user.js';
+import type { SecureUser } from '$db/types/user.js';
 import { CoercedBigInt } from '$lib/schemes.js';
 
 import { deleteLocalValue, useLocalCache } from '../cache/localCache.js';
@@ -45,12 +45,12 @@ export const resolveKey = async (authToken: string) => {
         return;
     }
 
-    const user = await useCache<User>(
+    const user = await useCache<SecureUser>(
         `user:${jwtParsed.data.uid}`,
         useLocalCache(),
         useRedisCache(),
         async () => {
-            return await DB.selectOneFrom('users', '*', {
+            return await DB.selectOneFrom('users', ['uid', 'username', 'kid', 'permissions'], {
                 uid: jwtParsed.data.uid,
                 kid: jwtParsed.data.kid,
             });

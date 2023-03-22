@@ -10,3 +10,5 @@ export type UserV1 = {
 };
 
 export type User = UserV1;
+
+export type SecureUser = Omit<User, 'password'>;
