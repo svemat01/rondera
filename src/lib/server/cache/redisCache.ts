@@ -18,24 +18,25 @@ export const setupRedis = async () => {
     }
 };
 
-export const useRedisCache: <K>() => ResolverSetter<K> = (expiry = 600) => ({
-    async resolver<K>(key: string) {
-        if (redisCache && redisCache.isOpen) {
-            const data = await redisCache.get(key);
+export const useRedisCache = <K>(expiry = 600) =>
+    ({
+        async resolver<K>(key: string) {
+            if (redisCache && redisCache.isOpen) {
+                const data = await redisCache.get(key);
 
-            if (!data) return;
+                if (!data) return;
 
-            return superjson.parse<K>(data);
-        }
-    },
-    setter(key, value) {
-        if (redisCache && redisCache.isOpen)
-            redisCache.set(key, superjson.stringify(value), { EX: expiry });
-    },
-});
+                return superjson.parse<K>(data);
+            }
+        },
+        setter(key, value) {
+            if (redisCache && redisCache.isOpen)
+                redisCache.set(key, superjson.stringify(value), { EX: expiry });
+        },
+    } satisfies ResolverSetter<K>);
 
 export const deleteRedisValue = async (key: string) => {
     if (redisCache && redisCache.isOpen) {
         await redisCache.del(key);
     }
-}
+};
