@@ -1,5 +1,5 @@
+/// <reference types="unplugin-icons/types/svelte" />
 // See https://kit.svelte.dev/docs/types#app
-
 import type { SecureUser } from '$db/types/user.js';
 
 // for information about these interfaces
