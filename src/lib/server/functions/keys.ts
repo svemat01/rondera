@@ -6,7 +6,7 @@ import type { SecureUser } from '$db/types/user.js';
 import { CoercedBigInt } from '$lib/schemes.js';
 
 import { deleteLocalValue, useLocalCache } from '../cache/localCache.js';
-import { deleteRedisValue, useRedisCache } from '../cache/redisCache.js';
+import { invalidateRedisCache, useRedisCache } from '../cache/redisCache.js';
 import { environment } from '../environment.js';
 import { SnowflakeGen } from '../sunflake.js';
 import { tryCatchMe } from '../trycatchme.js';
@@ -62,7 +62,7 @@ export const resolveKey = async (authToken: string) => {
 
 export const resetKeyCache = async (uid: bigint) => {
     deleteLocalValue(`user:${uid}`);
-    await deleteRedisValue(`user:${uid}`);
+    await invalidateRedisCache(`user:${uid}`);
 };
 
 export const resetKey = async (uid: bigint) => {

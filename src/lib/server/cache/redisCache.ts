@@ -35,7 +35,7 @@ export const useRedisCache = <K>(expiry = 600) =>
         },
     } satisfies ResolverSetter<K>);
 
-export const deleteRedisValue = async (key: string) => {
+export const invalidateRedisCache = async (key: string) => {
     if (redisCache && redisCache.isOpen) {
         await redisCache.del(key);
     }
