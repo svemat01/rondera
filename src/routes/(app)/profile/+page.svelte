@@ -1,4 +1,5 @@
 <script lang="ts">
+    import LinkButton from '$lib/components/LinkButton.svelte';
     import { permsToString } from '$lib/utils/permissions.js';
 
     import type { PageData } from './$types';
@@ -23,7 +24,7 @@
         {/each}
     </section>
 
-    <a href="/logout" class="logout">Logga ut</a>
+    <LinkButton href="/logout" style="primary">Logga ut</LinkButton>
 </div>
 
 <style lang="scss">
@@ -70,29 +71,9 @@
             font-size: 1.25rem;
         }
 
-        p, li {
+        p,
+        li {
             font-size: 1rem;
         }
-    }
-
-    .logout {
-        text-decoration: none;
-        color: white;
-        background-color: $blue-600;
-
-        padding: 0.5rem 1rem;
-        border-radius: 0.25rem;
-
-        width: fit-content;
-
-        font-size: 1rem;
-        font-weight: 500;
-
-        transition: all 0.2s ease;
-
-        &:hover {
-            background-color: $blue-700;
-        }
-        
     }
 </style>

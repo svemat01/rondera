@@ -4,6 +4,7 @@
     import { writable } from 'svelte/store';
 
     import type { SubCentral } from '$db/types/subcentral.js';
+    import LinkButton from '$lib/components/LinkButton.svelte';
 
     import type { PageData } from './$types';
 
@@ -54,7 +55,7 @@
     </thead>
     <tbody>
         {#each $table.getRowModel().rows as row}
-            <a href={`/subcentrals/${row.original.id}`} style='display: contents; color: inherit;'>
+            <a href={`/subcentrals/${row.original.id}`} style="display: contents; color: inherit;">
                 <tr>
                     {#each row.getVisibleCells() as cell}
                         <td>
@@ -69,9 +70,7 @@
     </tbody>
 </table>
 
-<a href="/subcentrals/create" class="button">
-    Skapa undercentral
-</a>
+<LinkButton href="/subcentrals/new" style="primary">Skapa undercentral</LinkButton>
 
 <style lang="scss">
     /* Make a rounded table */
@@ -83,12 +82,13 @@
         width: 100%;
         max-width: 900px;
 
-        margin-top: 1rem;
+        margin-block: 1rem;
 
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     }
 
-    th, td {
+    th,
+    td {
         padding: 0.75rem 1rem;
     }
 
@@ -108,30 +108,11 @@
             border-bottom: 1px solid $stone-200;
             background-color: $stone-100;
 
-            transition: background-color 0.1s ease-in-out; 
+            transition: background-color 0.1s ease-in-out;
 
             &:hover {
                 background-color: $stone-150;
             }
-        }
-    }
-
-    a.button {
-        display: inline-block;
-        padding: 0.75rem 1rem;
-        margin-top: 1rem;
-        border-radius: 0.3rem;
-
-        background-color: $blue-600;
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 1.1rem;
-        font-weight: 500;
-
-        transition: background-color 0.2s ease-in-out;
-
-        &:hover {
-            background-color: $blue-700;
         }
     }
 </style>

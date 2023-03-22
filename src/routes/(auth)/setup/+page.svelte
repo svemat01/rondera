@@ -1,8 +1,9 @@
 <script lang="ts">
     import { superForm } from 'sveltekit-superforms/client';
 
+    import Button from '$lib/components/Button.svelte';
     import { Password, Username } from '$lib/schemes.js';
-
+    
     import type { PageData } from './$types';
 
     export let data: PageData;
@@ -90,7 +91,7 @@
             {/if}
         </div>
 
-        <button>Skapa Konto</button>
+        <Button type="submit" style="primary" --width='none'>Skapa konto</Button>
     </form>
 </div>
 
@@ -141,25 +142,6 @@
             .error {
                 color: red;
                 font-size: 0.8rem;
-            }
-        }
-
-        button {
-            padding: 0.75rem;
-            border: none;
-            border-radius: 0.25rem;
-            outline: none;
-
-            font-size: 1rem;
-            font-weight: 600;
-
-            background-color: #43ADEB;
-            color: #111111;
-
-            cursor: pointer;
-
-            &:hover {
-                background-color: #3c9dd0;
             }
         }
     }
