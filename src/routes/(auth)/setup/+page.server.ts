@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { Password, Username } from '$lib/schemes.js';
 import { createKey } from '$lib/server/functions/keys.js';
 import { createUser } from '$lib/server/functions/users.js';
-import { Permissions } from '$lib/server/permissions.js';
+import { Permission } from '$lib/utils/permissions.js';
 
 import { setupCheck } from '../setupCheck.js';
 import type { Actions, PageServerLoad } from './$types';
@@ -55,7 +55,7 @@ export const actions = {
         }
 
         const { uid, kid } = await createUser(form.data.username, form.data.password, [
-            Permissions.FULL,
+            Permission.FULL,
         ]);
 
         const key = await createKey(uid, kid);

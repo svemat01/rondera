@@ -3,13 +3,13 @@ import { grantPermission } from 'permissio';
 
 import { DB } from '$db/database.js';
 
-import type { Permissions } from '../permissions.js';
+import type { Permission } from '../../utils/permissions.js';
 import { SnowflakeGen } from '../sunflake.js';
 
 export const createUser = async (
     username: string,
     password: string,
-    permissions: Permissions[],
+    permissions: Permission[],
 ) => {
     const passwordHash = await hash(password, 10);
 
