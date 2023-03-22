@@ -50,7 +50,7 @@
         "scyllo": "^1.7.2",
         "sunflake": "^0.6.0",
         "superjson": "^1.12.2",
-        "sveltekit-superforms": "0.6.1",
+        "sveltekit-superforms": "0.6.2",
         "zod": "^3.21.4"
     },
     "type": "module"
