@@ -2,6 +2,7 @@
     import { superForm } from 'sveltekit-superforms/client';
     
     import Button from '$lib/components/Button.svelte';
+    import LinkButton from '$lib/components/LinkButton.svelte';
     import Textarea from '$lib/components/Textarea.svelte';
     import TextInput from '$lib/components/TextInput.svelte';
     
@@ -51,7 +52,10 @@
         bind:value={$form.description}
     />
 
-    <Button type="submit" style="primary">Skapa</Button>
+    <div class="horizontal">
+        <Button type="submit" style="primary">Skapa</Button>
+        <LinkButton href="/subcentrals" style='secondary'>Avbryt</LinkButton>
+    </div>
 </form>
 
 <style lang="scss">
@@ -63,5 +67,11 @@
         max-width: 400px;
 
         margin-top: 1rem;
+    }
+
+    .horizontal {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
     }
 </style>
