@@ -7,7 +7,7 @@ import { runMigrations } from './migrations.js';
 import type { SubCentral } from './types/subcentral.js';
 import type { User } from './types/user.js';
 
-export const KEYSPACE = 'tracka';
+export const KEYSPACE = 'rondera';
 
 export const DB = new ScylloClient<{
     subcentrals: SubCentral;
