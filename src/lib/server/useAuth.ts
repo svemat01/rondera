@@ -1,13 +1,15 @@
-import { error, redirect } from '@sveltejs/kit';
+import { error, redirect, type RequestEvent } from '@sveltejs/kit';
 import { hasPermission } from 'permissio';
-
-import type { SecureUser } from '$db/types/user.js';
 
 import type { Permission } from '../utils/permissions.js';
 
-export const useAuth = (user: SecureUser | undefined, requiredPermissions: Permission[] = []) => {
+export const useAuth = (event: RequestEvent, requiredPermissions: Permission[] = []) => {
+    const { user } = event.locals;
+
     if (!user) {
-        throw redirect(307, '/login');
+        const toUrl = event.url.pathname + event.url.search;
+
+        throw redirect(307, `/auth/login?redirectTo=${toUrl}`);
     }
 
     if (requiredPermissions.length > 0) {

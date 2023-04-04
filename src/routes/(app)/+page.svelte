@@ -6,11 +6,11 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
 {#if data.user}
-    <a href="/logout">Logout</a>
+    <a href="/auth/logout">Logout</a>
 {:else if !data.setup}
-    <a href="/setup">Setup Tracka</a>
+    <a href="/auth/setup">Setup Tracka</a>
 {:else}
-    <a href="/login">Login</a>
+    <a href="/auth/login">Login</a>
 {/if}
 
 <p>{JSON.stringify(data, null, 4)}</p>

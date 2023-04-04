@@ -24,7 +24,7 @@
         {/each}
     </section>
 
-    <LinkButton href="/logout" style="primary">Logga ut</LinkButton>
+    <LinkButton href="/auth/logout" style="primary">Logga ut</LinkButton>
 </div>
 
 <style lang="scss">
